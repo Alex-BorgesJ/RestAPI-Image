@@ -7,6 +7,8 @@ Este projeto é uma API REST para manipulação de imagens, desenvolvida em ASP.
 2. [Instalação](#instalação)
 3. [Uso](#uso)
 4. [Exemplos](#exemplos)
+5. [Contribuição](#contribuição)
+6. [Licença](#licença)
 
 ## Recursos
 
@@ -80,4 +82,19 @@ curl -X POST \
       "yOffset": 50,
       "watermarkRotation": 45
   }'
+```
+
+## Contribuição
+
+Contribuições são bem-vindas! Siga os passos abaixo para contribuir com o projeto:
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`).
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`).
+4. Push para a branch (`git push origin feature/AmazingFeature`).
+5. Abra um Pull Request.
+```
+## Licença
+
+Este projeto está licenciado sob a Licença MIT.
 ```

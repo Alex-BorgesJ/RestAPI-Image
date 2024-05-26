@@ -83,7 +83,19 @@ curl -X POST \
       "watermarkRotation": 45
   }'
 ```
+### Exemplo de Imagem Original com aplicação da Marca d'água
 
+Imagem Original:
+
+![Imagem Original](images/imageOriginal.jpg)
+
+Imagem com Marca d'Água do tipo Texto:
+
+![Imagem com Marca d'Água do tipo Texto](images/imageWatermarkText.png)
+
+Imagem com Marca d'Água do tipo Imagem:
+
+![Imagem com Marca d'Água do tipo Imagem](images/imageWatermarkImage.png)
 ## Contribuição
 
 Contribuições são bem-vindas! Siga os passos abaixo para contribuir com o projeto:

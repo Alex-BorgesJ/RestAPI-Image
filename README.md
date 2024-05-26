@@ -65,7 +65,6 @@ Certifique-se de ter o [.NET SDK](https://dotnet.microsoft.com/download) e o [AS
   }
   ```
    **Observação:** A marca d'água será ou do tipo texto ou do tipo imagem. Isso garante que cada uma das marcas seja adicionada e consultada antes de serem sobrepostas. A do tipo texto tem preferência, forneça cada uma de maneira independente.
-```
 
 ## Exemplos
 

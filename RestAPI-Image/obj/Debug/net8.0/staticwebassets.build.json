@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "SsXi4BOiO+7/6dkGZ01MH/Syl5LR9yD4yNAKcEsbvkg=",
+  "Source": "RestAPI-Image",
+  "BasePath": "_content/RestAPI-Image",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

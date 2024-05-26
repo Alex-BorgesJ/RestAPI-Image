@@ -1,0 +1,18 @@
+@RestAPI_Image_HostAddress = https://localhost:7293
+
+GET {{RestAPI_Image_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{RestAPI_Image_HostAddress}}/api/images
+Content-Type: application/json
+
+{
+    "imageBase64": (string base64),
+    "watermarkText": (string base64, opcional),
+    "WatermarkImageBase64": (string base64, opcional) ,
+    "xOffset": (int positive),
+    "yOffset": (int positive),
+    "watermarkRotation": (int between 0 and 360)
+}

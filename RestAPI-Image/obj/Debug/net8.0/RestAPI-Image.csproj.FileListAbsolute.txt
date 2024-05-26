@@ -33,3 +33,4 @@ C:\Users\AlexJr\Desktop\RestAPI-Image\RestAPI-Image\obj\Debug\net8.0\refint\Rest
 C:\Users\AlexJr\Desktop\RestAPI-Image\RestAPI-Image\obj\Debug\net8.0\RestAPI-Image.pdb
 C:\Users\AlexJr\Desktop\RestAPI-Image\RestAPI-Image\obj\Debug\net8.0\RestAPI-Image.genruntimeconfig.cache
 C:\Users\AlexJr\Desktop\RestAPI-Image\RestAPI-Image\obj\Debug\net8.0\ref\RestAPI-Image.dll
+C:\Users\AlexJr\Desktop\RestAPI-Image\RestAPI-Image\obj\Debug\net8.0\RestAPI-Image.sourcelink.json

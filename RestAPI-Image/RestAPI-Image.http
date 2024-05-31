@@ -9,9 +9,9 @@ POST {{RestAPI_Image_HostAddress}}/api/images
 Content-Type: application/json
 
 {
-    "imageBase64": (string base64),
+    "imageFile": (caminho/do/arquivo/imagem.jpg),
     "watermarkText": (string base64, opcional),
-    "WatermarkImageBase64": (string base64, opcional) ,
+    "WatermarkImage": (caminho/do/arquivo/imagem.jpg, opcional) ,
     "xOffset": (int positive),
     "yOffset": (int positive),
     "watermarkRotation": (int between 0 and 360)

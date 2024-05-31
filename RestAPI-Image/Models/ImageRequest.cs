@@ -5,25 +5,10 @@ namespace ImageManipulationAPI.Models
 {
     public class ImageRequest
     {
-        private string _imageBase64;
         private string _watermarkText = string.Empty;
-        private string _watermarkImageBase64 = string.Empty;
         private int _xOffset;
         private int _yOffset;
         private int _watermarkRotation;
-
-        public string ImageBase64
-        {
-            get => _imageBase64;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ImageRequestValidationException("ImageBase64 cannot be null or empty.");
-                }
-                _imageBase64 = value;
-            }
-        }
 
         public string WatermarkText
         {
@@ -35,19 +20,6 @@ namespace ImageManipulationAPI.Models
                     throw new ImageRequestValidationException("WatermarkText cannot exceed 100 characters.");
                 }
                 _watermarkText = value;
-            }
-        }
-
-        public string WatermarkImageBase64
-        {
-            get => _watermarkImageBase64;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value) && !IsBase64String(value))
-                {
-                    throw new ImageRequestValidationException("Invalid base64 string for WatermarkImageBase64.");
-                }
-                _watermarkImageBase64 = value;
             }
         }
 

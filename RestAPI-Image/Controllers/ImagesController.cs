@@ -6,6 +6,7 @@ using System.IO;
 using ImageManipulationAPI.Models;
 using ImageManipulationAPI.Exceptions;
 using RestAPI_Image.Services.Interfaces;
+using RestAPI_Image.DTOs;
 
 namespace ImageManipulationAPI.Controllers
 {
@@ -22,17 +23,26 @@ namespace ImageManipulationAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> Post([FromBody] ImageRequest request)
+        [Route("upload")]
+        public async Task<IActionResult> Post(ImageDTO dto)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.ImageBase64))
+            try
             {
-                return BadRequest("Invalid request data.");
+                if (dto.fileImage == null || dto.fileImage.Length == 0)
+                {
+                    return BadRequest("Arquivo não enviado.");
+                }
+
+                byte[]? result = await _imagesServices.ApplyWatermarkImageOrText(dto);
+                return File(result, "image/png");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Ocorreu um erro ao processar o arquivo: {ex.Message}");
             }
 
-            string? result = _imagesServices.ApplyWatermarkImageOrText(request);
-            return Ok(result);
         }
 
-       
+
     }
 }

@@ -2,6 +2,9 @@
 using System.Drawing.Imaging;
 using System.Drawing;
 using ImageManipulationAPI.Models;
+using RestAPI_Image.DTOs;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RestAPI_Image.Services.Images
 {
@@ -12,53 +15,68 @@ namespace RestAPI_Image.Services.Images
 
         }
 
-        public string? ApplyWatermarkImageOrText(ImageRequest request)
+        public async Task<byte[]?> ApplyWatermarkImageOrText(ImageDTO dto)
         {
             try
             {
-                // Decodificar a imagem principal
-                byte[] imageBytes = Convert.FromBase64String(request.ImageBase64);
+                string base64String;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await dto.fileImage.CopyToAsync(memoryStream);
+                    byte[] bytes = memoryStream.ToArray();
+                    base64String = Convert.ToBase64String(bytes);
+                }
+
+                byte[] imageBytes = Convert.FromBase64String(base64String);
                 using var ms = new MemoryStream(imageBytes);
                 var image = Image.FromStream(ms);
 
-                // Aplicar a marca d'água
+
+                //Aplicar a marca d'água
                 using var graphics = Graphics.FromImage(image);
 
-                if (!string.IsNullOrWhiteSpace(request.WatermarkText))
+                if (!string.IsNullOrWhiteSpace(dto.request.WatermarkText))
                 {
-                    ApplyTextWatermark(graphics, image, request.WatermarkText, request.XOffset, request.YOffset, request.WatermarkRotation);
+                    ApplyTextWatermark(graphics, image, dto.request.WatermarkText, dto.request.XOffset, dto.request.YOffset, dto.request.WatermarkRotation);
                 }
-                else if (!string.IsNullOrWhiteSpace(request.WatermarkImageBase64))
+                else if (dto.fileWatermark != null || dto.fileWatermark.Length != 0)
                 {
+                    string base64Wmark;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await dto.fileWatermark.CopyToAsync(memoryStream);
+                        byte[] bytes = memoryStream.ToArray();
+                        base64Wmark = Convert.ToBase64String(bytes);
+                    }
+
                     //decodificando WaterMarkImage 
-                    byte[] wmBytes = Convert.FromBase64String(request.WatermarkImageBase64);
+                    byte[] wmBytes = Convert.FromBase64String(base64Wmark);
                     using var wmMs = new MemoryStream(wmBytes);
                     var wmImage = Image.FromStream(wmMs);
                     if (wmImage.Width <= image.Width && wmImage.Height <= image.Height)
                     {
-                        ApplyImageWatermark(graphics, image, request.WatermarkImageBase64, request.XOffset, request.YOffset, request.WatermarkRotation);
+                        ApplyImageWatermark(graphics, image, base64Wmark, dto.request.XOffset, dto.request.YOffset, dto.request.WatermarkRotation);
                     }
                     else
                     {
-                        return "A watermark image has dimensions incompatible with the main image.";
+                        throw new ArgumentException("A watermark image has dimensions incompatible with the main image.");
                     }
                 }
                 else
                 {
-                   return "Watermark text or watermark image must be provided.";
+                    throw new ArgumentException("Watermark text or watermark image must be provided.");
                 }
 
-                // Converter a imagem de volta para base64
+                // Seus códigos para obter os bytes da imagem com marca d'água
                 using var msWatermarked = new MemoryStream();
                 image.Save(msWatermarked, ImageFormat.Png);
                 var imageBytesWatermarked = msWatermarked.ToArray();
-                var imageBase64Watermarked = Convert.ToBase64String(imageBytesWatermarked);
+                return imageBytesWatermarked;
 
-                return imageBase64Watermarked;
             }
             catch (ArgumentException ex)
             {
-                return ex.Message;
+                throw;
             }
         }
 
@@ -99,5 +117,6 @@ namespace RestAPI_Image.Services.Images
             graphics.Restore(state);
 
         }
+
     }
 }
